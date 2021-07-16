@@ -1,22 +1,23 @@
-// import { configureStore } from "@reduxjs/toolkit";
-const { configureStore } = require("@reduxjs/toolkit");
+import { configureStore } from "@reduxjs/toolkit";
 
 // Action creators
-const addTask = (value) => ({
-  type: "ADD_TASK",
-  payload: value,
-});
+export const actions = {
+  addTask: (value) => ({
+    type: "ADD_TASK",
+    payload: value,
+  }),
+  toggleStroke: (index) => ({
+    type: "TOGGLE_STROKE",
+    payload: index,
+  }),
+};
 
-const toggleStroke = (index) => ({
-  type: "TOGGLE_STROKE",
-  payload: index,
-});
-
+// estado inicial
 const initalState = {
   taskList: [],
 };
 
-// Reducer fn(state, action) => newState
+// Reducer fn(currentState, action) => newState
 function taskListReducer(state = initalState, action = {}) {
   switch (action.type) {
     case "ADD_TASK":
@@ -40,21 +41,23 @@ function taskListReducer(state = initalState, action = {}) {
 }
 
 // Confugre store (banco de dados da app)
-const db = configureStore({
+export const store = configureStore({
   reducer: taskListReducer,
 });
 
 // Selector
-const taskListSelector = (state = db.getState()) => state.taskList;
+export const taskListSelector = (state) => state.taskList;
 
-// dispatch
-db.dispatch(addTask("task1"));
-db.dispatch(addTask("task2"));
-db.dispatch(addTask("task3"));
-db.dispatch(addTask("task4"));
+// // dispatch
+// const action = actions.addTask("task1")
+// store.dispatch(action);
+// store.dispatch(addTask("task1"));
+// store.dispatch(addTask("task2"));
+// store.dispatch(addTask("task3"));
+// store.dispatch(addTask("task4"));
 
-db.dispatch(toggleStroke(1));
-db.dispatch(toggleStroke(3));
+// store.dispatch(toggleStroke(1));
+// store.dispatch(toggleStroke(3));
 
-// console.log(db.getState());
-console.log(taskListSelector());
+// // console.log(db.getState());
+// console.log(taskListSelector());
