@@ -1,12 +1,13 @@
 import React from "react";
+import { useTaskList } from "./redux/hooks";
 
-function InputForm({ onSubmit = () => {} }) {
+function InputForm() {
+  const { addTask } = useTaskList();
   const handleSubmit = (e = new React.FormEvent()) => {
     e.preventDefault();
     const [firstInputEl] = [...e.target.elements];
 
-    // Chama submit handler do pai
-    onSubmit(firstInputEl.value);
+    addTask(firstInputEl.value);
 
     // Limpa valor do input
     firstInputEl.value = "";
